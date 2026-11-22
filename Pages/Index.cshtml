@@ -1,0 +1,25 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["Heading"] = "Overview";
+}
+<div class="welcome-banner">
+    <div><span class="pill light-pill">✦ YOUR ACADEMIC OVERVIEW</span><h1>Welcome back, Admin!</h1><p>Here’s what’s happening with your students today.</p><a class="btn btn-white" asp-page="/AddStudent">＋ Add new student</a></div>
+    <div class="banner-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="cap">🎓</div><div class="sparkle">✦</div></div>
+</div>
+<div class="section-heading"><div><span class="eyebrow">AT A GLANCE</span><h3>Performance snapshot</h3></div><span class="muted">Live demo overview</span></div>
+<div class="stats-grid">
+    <div class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon purple">♙</span></div><strong class="count-up">@Model.Students.Count</strong><small>Registered students</small></div>
+    <div class="stat-card"><div class="stat-top"><span>Class average</span><span class="stat-icon blue">％</span></div><strong class="count-up">@Model.ClassAverage.ToString("0.0")<em>%</em></strong><small>Across all subjects</small></div>
+    <div class="stat-card"><div class="stat-top"><span>Passed</span><span class="stat-icon green">✓</span></div><strong class="count-up">@Model.Passed</strong><small>Average 50% or above</small></div>
+    <div class="stat-card"><div class="stat-top"><span>Need improvement</span><span class="stat-icon orange">↗</span></div><strong class="count-up">@Model.NeedsImprovement</strong><small>Below 50% average</small></div>
+</div>
+<div class="section-heading"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Recently added students</h3></div><a class="text-link" asp-page="/Students">View all students →</a></div>
+<div class="panel table-panel">
+    <table><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>TOTAL MARKS</th><th>AVERAGE</th><th>GRADE</th><th></th></tr></thead><tbody>
+    @foreach (var student in Model.Students.Take(5)) {
+        <tr><td><div class="student-cell"><span class="mini-avatar">@student.Name.Substring(0,1)</span><b>@student.Name</b></div></td><td class="muted">@student.StudentId</td><td>@student.Total / 500</td><td>@student.Average.ToString("0.0")%</td><td><span class="grade grade-@student.Grade.ToLower()">@student.Grade</span></td><td><a class="row-link" asp-page="/Report" asp-route-id="@student.StudentId">View report ↗</a></td></tr>
+    }
+    </tbody></table>
+</div>

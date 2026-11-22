@@ -1,0 +1,17 @@
+@page
+@model StudentsModel
+@{
+    ViewData["Title"] = "Students";
+    ViewData["Heading"] = "Students records";
+}
+<div class="intro-row"><div><span class="eyebrow">ALL STUDENTS</span><h1 class="page-title">Student directory</h1><p class="muted">Browse student performance and open individual report cards.</p></div><a class="btn btn-primary" asp-page="/AddStudent">＋ Add student</a></div>
+<div class="toolbar panel"><div class="search-box">⌕ <input id="studentSearch" placeholder="Search by name or student ID..." /></div><span class="muted">@Model.Students.Count records</span></div>
+<div class="panel table-panel">
+<table id="studentsTable"><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>SUBJECTS</th><th>TOTAL</th><th>AVERAGE</th><th>GRADE</th><th>REPORT</th></tr></thead><tbody>
+@foreach (var s in Model.Students) {
+<tr><td><div class="student-cell"><span class="mini-avatar">@s.Name.Substring(0,1)</span><b>@s.Name</b></div></td><td class="muted">@s.StudentId</td><td>5 subjects</td><td>@s.Total / 500</td><td>@s.Average.ToString("0.0")%</td><td><span class="grade grade-@s.Grade.ToLower()">@s.Grade</span></td><td><a class="row-link" asp-page="/Report" asp-route-id="@s.StudentId">View ↗</a></td></tr>
+}
+</tbody></table>
+@if (!Model.Students.Any()) { <div class="empty-state">No students yet. Add your first student to get started.</div> }
+</div>
+@section Scripts { <script>document.getElementById('studentSearch').addEventListener('input', function(){ const q=this.value.toLowerCase(); document.querySelectorAll('#studentsTable tbody tr').forEach(row=>row.style.display=row.innerText.toLowerCase().includes(q)?'':'none'); });</script> }

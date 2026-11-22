@@ -1,0 +1,26 @@
+@page
+@model AddStudentModel
+@{
+    ViewData["Title"] = "Add Student";
+    ViewData["Heading"] = "Add a student";
+}
+<div class="intro-row"><div><span class="eyebrow">STUDENT ENROLLMENT</span><h1 class="page-title">Create student record</h1><p class="muted">Enter student details and marks for all five subjects.</p></div><span class="step-badge">01 <span>/ 01</span></span></div>
+@if (!string.IsNullOrWhiteSpace(Model.Message)) { <div class="alert @(Model.IsSuccess ? "success" : "error")">@Model.Message</div> }
+<div class="form-layout">
+<form method="post" class="panel student-form">
+    <div class="form-section-title"><span class="number">01</span><div><h3>Basic information</h3><p>Identify the student</p></div></div>
+    <div class="field-grid">
+        <label class="field full"><span>Student full name</span><input asp-for="StudentName" placeholder="e.g. Ayesha Khan" /><small asp-validation-for="StudentName"></small></label>
+        <label class="field full"><span>Student ID</span><input asp-for="StudentId" placeholder="e.g. ST-1004" /><small asp-validation-for="StudentId"></small></label>
+    </div>
+    <div class="form-divider"></div>
+    <div class="form-section-title"><span class="number">02</span><div><h3>Subject marks</h3><p>Enter marks out of 100 for each subject</p></div></div>
+    <div class="marks-grid">
+        @for (int i = 0; i < 5; i++) {
+            <label class="field"><span>Subject @(i + 1)</span><input name="MarkInputs[@i]" value="@(Model.MarkInputs.Count > i ? Model.MarkInputs[i] : "")" placeholder="0 - 100" inputmode="numeric" /><small>Maximum 100</small></label>
+        }
+    </div>
+    <div class="form-actions"><a class="btn btn-ghost" asp-page="/Students">Cancel</a><button class="btn btn-primary" type="submit">Generate report card <span>→</span></button></div>
+</form>
+<aside class="side-note"><div class="note-icon">✦</div><h3>Quick reminder</h3><p>Make sure all five subject marks are entered correctly.</p><ul><li>Marks must be whole numbers.</li><li>Each subject is out of 100.</li><li>Student ID must be unique.</li><li>Invalid input will show a helpful message.</li></ul><div class="total-preview"><small>MAXIMUM TOTAL</small><strong>500 <span>marks</span></strong></div></aside>
+</div>

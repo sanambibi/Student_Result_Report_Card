@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GradeFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" asp-page="/Index"><span class="brand-mark">G</span><span>Grade<span class="brand-light">Flow</span><small>STUDENT PORTAL</small></span></a>
+            <div class="nav-caption">WORKSPACE</div>
+            <nav>
+                <a class="nav-link" asp-page="/Index"><span>▦</span> Dashboard</a>
+                <a class="nav-link" asp-page="/AddStudent"><span>＋</span> Add Student</a>
+                <a class="nav-link" asp-page="/Students"><span>▤</span> Students Records</a>
+            </nav>
+            <div class="sidebar-bottom"><div class="help-icon">?</div><div><b>Need help?</b><small>Manage your student results</small></div></div>
+        </aside>
+        <main class="main-area">
+            <header class="topbar"><div><span class="eyebrow">ACADEMIC MANAGEMENT</span><h2>@ViewData["Heading"]</h2></div><div class="profile"><div class="avatar">A</div><div><b>Administrator</b><small>Academic Office</small></div></div></header>
+            <section class="page-content">@RenderBody()</section>
+            <footer>© 2026 GradeFlow · Student Result Management</footer>
+        </main>
+    </div>
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
